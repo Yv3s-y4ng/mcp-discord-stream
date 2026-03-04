@@ -1,4 +1,5 @@
 // Test utilities and mocks setup
+import { jest } from '@jest/globals';
 import type { Client, Message } from 'discord.js';
 import { Collection } from 'discord.js';
 
@@ -13,10 +14,10 @@ export const mockChannel = {
 export const mockClient: Partial<Client> = {
   isReady: (() => true) as any,
   guilds: {
-    fetch: jest.fn().mockResolvedValue(new Map()),
+    fetch: jest.fn<any>().mockResolvedValue(new Map()),
   } as any,
   channels: {
-    fetch: jest.fn().mockResolvedValue(mockChannel),
+    fetch: jest.fn<any>().mockResolvedValue(mockChannel),
   } as any,
 };
 
