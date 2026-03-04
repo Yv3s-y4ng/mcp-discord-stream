@@ -8,7 +8,6 @@ export default {
   transform: {
     '^.+\\.ts$': ['ts-jest', {
       useESM: true,
-      isolatedModules: true,
     }],
   },
   testMatch: ['**/tests/**/*.test.ts'],
