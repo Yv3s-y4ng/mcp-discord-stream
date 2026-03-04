@@ -33,5 +33,5 @@ export const mockMessage = (id: string, content: string, createdAt: Date): Parti
     attachments: new Collection(),
     embeds: [],
     reference: null,
-  } as Partial<Message>;
+  } as unknown as Partial<Message>;
 };
