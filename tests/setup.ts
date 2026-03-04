@@ -1,13 +1,6 @@
 // Test utilities and mocks setup
-export const mockClient = {
-  isReady: () => true,
-  guilds: {
-    fetch: jest.fn(),
-  },
-  channels: {
-    fetch: jest.fn(),
-  },
-};
+import type { Client, Message } from 'discord.js';
+import { Collection } from 'discord.js';
 
 export const mockChannel = {
   id: 'test-channel-123',
@@ -17,16 +10,28 @@ export const mockChannel = {
   isTextBased: () => true,
 };
 
-export const mockMessage = (id: string, content: string, createdAt: Date) => ({
-  id,
-  content,
-  author: {
-    id: 'user-123',
-    username: 'testuser',
-    bot: false,
-  },
-  createdAt,
-  attachments: new Map(),
-  embeds: [],
-  reference: null,
-});
+export const mockClient: Partial<Client> = {
+  isReady: (() => true) as any,
+  guilds: {
+    fetch: jest.fn().mockResolvedValue(new Map()),
+  } as any,
+  channels: {
+    fetch: jest.fn().mockResolvedValue(mockChannel),
+  } as any,
+};
+
+export const mockMessage = (id: string, content: string, createdAt: Date): Partial<Message> => {
+  return {
+    id,
+    content,
+    author: {
+      id: 'user-123',
+      username: 'testuser',
+      bot: false,
+    } as any,
+    createdAt,
+    attachments: new Collection(),
+    embeds: [],
+    reference: null,
+  } as Partial<Message>;
+};
