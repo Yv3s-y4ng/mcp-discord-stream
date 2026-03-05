@@ -1,6 +1,6 @@
 import { ChannelType } from "discord.js";
 import { handleDiscordError } from "../errorHandler.js";
-import { GetServerInfoSchema, ListServersSchema, SearchMessagesSchema, GetChannelListSchema } from "../schemas.js";
+import { GetServerInfoSchema, ListServersSchema, SearchMessagesSchema } from "../schemas.js";
 import { ToolContext, ToolResponse, ToolHandler } from "./types.js";
 
 
@@ -186,56 +186,4 @@ export async function getServerInfoHandler(
     return handleDiscordError(error);
   }
 }
-
-// Get channel list handler
-export const getChannelListHandler: ToolHandler = async (args, { client }) => {
-  const { guildId, channelType } = GetChannelListSchema.parse(args);
-
-  try {
-    if (!client.isReady()) {
-      return {
-        content: [{ type: "text", text: "Discord client not logged in." }],
-        isError: true
-      };
-    }
-
-    const guild = await client.guilds.fetch(guildId);
-    if (!guild) {
-      return {
-        content: [{ type: "text", text: `Cannot find guild with ID: ${guildId}` }],
-        isError: true
-      };
-    }
-
-    const channels = await guild.channels.fetch();
-
-    let filteredChannels = Array.from(channels.values()).filter(ch => ch !== null);
-
-    // Filter by type if specified
-    if (channelType === 'text') {
-      filteredChannels = filteredChannels.filter(ch => ch!.type === ChannelType.GuildText);
-    } else if (channelType === 'forum') {
-      filteredChannels = filteredChannels.filter(ch => ch!.type === ChannelType.GuildForum);
-    }
-
-    const channelList = filteredChannels.map(ch => ({
-      id: ch!.id,
-      name: ch!.name,
-      type: ch!.type === ChannelType.GuildText ? 'text' :
-            ch!.type === ChannelType.GuildForum ? 'forum' : 'other',
-    }));
-
-    return {
-      content: [{
-        type: "text",
-        text: JSON.stringify({
-          guildId,
-          channels: channelList,
-        }, null, 2)
-      }]
-    };
-  } catch (error) {
-    return handleDiscordError(error);
-  }
-};
 

@@ -136,7 +136,7 @@ export const ArchiveMultipleForumsSchema = z.object({
 
 export const GetChannelListSchema = z.object({
   guildId: z.string(),
-  channelType: z.enum(['text', 'forum', 'all']).optional().default('all'),
+  channelTypes: z.array(z.number()).optional(),
 });
 
 export const DeleteMessageSchema = z.object({

@@ -9,7 +9,8 @@ import {
   EditCategorySchema,
   DeleteCategorySchema,
   ReadMessagesStreamSchema,
-  ReadMultipleChannelsSchema
+  ReadMultipleChannelsSchema,
+  GetChannelListSchema
 } from "../schemas.js";
 import { handleDiscordError } from "../errorHandler.js";
 import { MessageStreamer } from "./stream/MessageStreamer.js";
@@ -354,6 +355,63 @@ export async function readMultipleChannelsHandler(
       content: [{
         type: "text",
         text: JSON.stringify({ channels: results }, null, 2)
+      }]
+    };
+  } catch (error) {
+    return handleDiscordError(error);
+  }
+}
+
+// Get channel list handler
+export async function getChannelListHandler(
+  args: unknown,
+  context: ToolContext
+): Promise<ToolResponse> {
+  const { guildId, channelTypes } = GetChannelListSchema.parse(args);
+
+  try {
+    if (!context.client.isReady()) {
+      return {
+        content: [{ type: "text", text: "Discord client not logged in." }],
+        isError: true
+      };
+    }
+
+    const guild = await context.client.guilds.fetch(guildId);
+    if (!guild) {
+      return {
+        content: [{ type: "text", text: `Cannot find guild with ID: ${guildId}` }],
+        isError: true
+      };
+    }
+
+    const channels = await guild.channels.fetch();
+
+    // Filter out null channels
+    let filteredChannels = Array.from(channels.values()).filter(ch => ch !== null);
+
+    // Filter by channel types if provided
+    if (channelTypes && channelTypes.length > 0) {
+      filteredChannels = filteredChannels.filter(channel =>
+        channelTypes.includes(channel!.type)
+      );
+    }
+
+    const channelList = filteredChannels.map(channel => ({
+      id: channel!.id,
+      name: channel!.name,
+      type: channel!.type,
+      parentId: channel!.parentId
+    }));
+
+    return {
+      content: [{
+        type: "text",
+        text: JSON.stringify({
+          guildId,
+          totalChannels: channelList.length,
+          channels: channelList
+        }, null, 2)
       }]
     };
   } catch (error) {
