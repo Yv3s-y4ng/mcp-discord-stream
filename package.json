@@ -1,7 +1,7 @@
 {
-  "name": "mcp-discord",
-  "version": "1.3.4",
-  "description": "Model Context Protocol (MCP) server for Discord integration, allowing Claude and other MCP clients to interact with Discord",
+  "name": "@yangyifei/mcp-discord-stream",
+  "version": "1.4.0",
+  "description": "Model Context Protocol (MCP) server for Discord with unlimited message streaming, forum archiving, and time-range filtering. Allows Claude and other MCP clients to read complete Discord history.",
   "main": "build/index.js",
   "bin": {
     "mcp-discord": "build/index.js"
@@ -24,18 +24,23 @@
     "claude",
     "ai",
     "chatbot",
-    "automation"
+    "automation",
+    "streaming",
+    "archive",
+    "history",
+    "forum",
+    "unlimited-messages"
   ],
   "author": "Barry Yip <barry99625@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/barryyip0625/mcp-discord.git"
+    "url": "git+https://github.com/yangyifei/mcp-discord-stream.git"
   },
   "bugs": {
-    "url": "https://github.com/barryyip0625/mcp-discord/issues"
+    "url": "https://github.com/yangyifei/mcp-discord-stream/issues"
   },
-  "homepage": "https://github.com/barryyip0625/mcp-discord#readme",
+  "homepage": "https://github.com/yangyifei/mcp-discord-stream#readme",
   "files": [
     "build/",
     "README.md",
