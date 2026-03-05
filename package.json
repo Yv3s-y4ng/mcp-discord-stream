@@ -35,12 +35,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yangyifei/mcp-discord-stream.git"
+    "url": "git+https://github.com/Y1fe1-Yang/mcp-discord-stream.git"
   },
   "bugs": {
-    "url": "https://github.com/yangyifei/mcp-discord-stream/issues"
+    "url": "https://github.com/Y1fe1-Yang/mcp-discord-stream/issues"
   },
-  "homepage": "https://github.com/yangyifei/mcp-discord-stream#readme",
+  "homepage": "https://github.com/Y1fe1-Yang/mcp-discord-stream#readme",
   "files": [
     "build/",
     "README.md",
