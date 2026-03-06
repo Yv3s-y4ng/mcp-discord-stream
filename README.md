@@ -101,7 +101,7 @@ npx @yangyifei/mcp-discord-stream --config ${DISCORD_TOKEN}
 ### Manual Installation
 ```bash
 # Clone the repository
-git clone https://github.com/Y1fe1-Yang/mcp-discord-stream.git
+git clone https://github.com/Yv3s-y4ng/mcp-discord-stream.git
 cd mcp-discord-stream
 
 # Install dependencies
